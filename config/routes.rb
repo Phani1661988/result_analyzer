@@ -5,4 +5,8 @@ Rails.application.routes.draw do
   post "/calculate_daily_stats" => "daily_result_stats#calculate_daily_result_stats"
 
   get "/get_daily_stats" => "daily_result_stats#fetch_daily_stats"
+
+  post "/calculate_monthly_stats" => "monthly_averages#calculate_monthly_stats"
+
+  get "/fetch_monthly_stats" => "monthly_averages#fetch_monthly_stats"
 end

@@ -15,7 +15,7 @@ class DailyResultStatsController < ApplicationController
  private
 
 	 def calculate_daily_low_daily_high_count
-	 	return render json: {error: "No stats exist for today"} if Result.all.blank?
+	 	return render json: {error: "No stats exist for today"} if Result.where('created_at::Date=?', Date.today).blank?
 
 	 	stats_array = calculate_subjectwise_aggregates(Result.all)
 	 	stats_array.each do |stat|
@@ -25,7 +25,7 @@ class DailyResultStatsController < ApplicationController
 	 end
 
 	 def calculate_subjectwise_aggregates(results)
-	 	DailyResultStat.destroy_all
+	 	DailyResultStat.where('created_at::Date=?', Date.today).destroy_all
 	 	stats_array = Array.new
 	 	date = Date.parse(DateTime.now.strftime("%Y-%m-%d"))
 	 	SUBJECTS.each do |subject|
@@ -41,3 +41,5 @@ class DailyResultStatsController < ApplicationController
 	 	stats_array
 	 end
 end
+
+# DailyResultStat.where('created_at::Date=?', Date.tomorrow)
